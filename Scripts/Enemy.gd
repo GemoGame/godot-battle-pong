@@ -1,53 +1,44 @@
 extends "res://Scripts/Paddle.gd"
 
-### INPUT ###
-export (int) var DIFFERENCE_TOLERANCE = 20
-var input_position = Vector2(576/2, 0)
+### GAME VARIABEL ###
+export (bool) var EASY_MODE = true
 
-#
-#func get_ball_position():
-#	var closest_ball = Vector2(0, GAME_SIZE.y)
-#	for ball in get_tree().get_nodes_in_group("Ball"):
-#		if ball.position.y <= closest_ball.y:
-#			closest_ball = ball.position
-#	return closest_ball
-#
-#
-#func has_align_target(target):
-#	return position.x <= (target.x + DIFFERENCE_TOLERANCE) and position.x >= (target.x - DIFFERENCE_TOLERANCE)
-#
-#
-#func _physics_process(delta):
-#	var ball_target = get_ball_position()
-#	if position.x <= ball_target.x:
-#		velocity.x = SPEED
-#		print("Left")
-#	elif position.x >= ball_target.x:
-#		velocity.x = -SPEED
-#		print("Right")
-#	if has_align_target(ball_target) or is_at_edge():
-#		velocity.x = 0
-#	move_and_collide(velocity * delta)
+### PADDLE VARIABLE ####
+const NORMAL_POSITION = Vector2(288, 48)
+var current_target = null
 
 
-func get_ball_position():
-	var closest_ball = Vector2(0, GAME_SIZE.y)
+func get_target():
+	if get_closest_ball() == null:
+		return NORMAL_POSITION
+	if EASY_MODE:
+		return get_closest_ball().position
+	else:
+		return get_closest_ball().destination
+
+
+func get_closest_ball():
+	var closest_ball = null
 	for ball in get_tree().get_nodes_in_group("Ball"):
-		if ball.position.y <= closest_ball.y:
-			closest_ball = ball.position
+		if closest_ball == null:
+			closest_ball = ball
+		if ball.position.y <= closest_ball.position.y and ball.velocity.y <= 0:
+			closest_ball = ball
 	return closest_ball
 
 
-func has_align_target(target):
-	return position.x <= (target.x + DIFFERENCE_TOLERANCE) and position.x >= (target.x - DIFFERENCE_TOLERANCE)
-
-
 func _physics_process(delta):
-	var ball_target = get_ball_position()
-	if position.x <= ball_target.x:
-		velocity.x = SPEED
-	elif position.x >= ball_target.x:
-		velocity.x = -SPEED
-	if has_align_target(ball_target) or is_at_edge():
+	current_target = get_target()
+	if (current_target == Vector2(0, 0) or 
+		current_target.x <= 0 or
+		current_target.x >= GAME_SIZE.x):
+		calculate_position_difference(NORMAL_POSITION)
+	else:
+		calculate_position_difference(current_target)
+	if is_at_edge():
 		velocity.x = 0
-	move_and_collide(velocity * delta)
+	var collision = move_and_collide(velocity * delta)
+	if collision:
+		if collision.collider.is_in_group("Ball"):
+			calculate_reflect_difference(collision.collider)
+			current_target = null

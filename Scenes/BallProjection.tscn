@@ -1,8 +1,0 @@
-[gd_scene load_steps=3 format=2]
-
-[ext_resource path="res://Scenes/Ball.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Scenes/BallProjection.gd" type="Script" id=2]
-
-[node name="BallProjection" index="0" instance=ExtResource( 1 )]
-modulate = Color( 1, 0.121569, 1, 1 )
-script = ExtResource( 2 )

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Batter.png-fb071af1a58bbe9e8a5c3ff402d7fcc8.stex"
+path="res://.import/Paddle.png-6927743cafbeba94f46f1c5e597122c4.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Batter.png"
-dest_files=[ "res://.import/Batter.png-fb071af1a58bbe9e8a5c3ff402d7fcc8.stex" ]
+source_file="res://Assets/Paddle.png"
+dest_files=[ "res://.import/Paddle.png-6927743cafbeba94f46f1c5e597122c4.stex" ]
 
 [params]
 

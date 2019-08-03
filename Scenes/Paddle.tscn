@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scripts/Paddle.gd" type="Script" id=1]
-[ext_resource path="res://Assets/Batter.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Paddle.png" type="Texture" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 120.864, 25.4048 )

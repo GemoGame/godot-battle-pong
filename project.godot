@@ -40,10 +40,10 @@ ui_touch={
 
 [layer_names]
 
-2d_physics/layer_1="paddle"
-2d_physics/layer_2="wall"
-2d_physics/layer_3="ball"
-2d_physics/layer_4="ballprojection"
+2d_physics/layer_1="Paddle"
+2d_physics/layer_2="Obstacle"
+2d_physics/layer_3="Ball"
+2d_physics/layer_4="AI Detector"
 
 [rendering]
 

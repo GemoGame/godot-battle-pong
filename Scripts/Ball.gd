@@ -1,46 +1,70 @@
 extends KinematicBody2D
 
-signal ball_out
-
-export (int) var SPEED = 300
-
-
-const PROJECTION_PATH = "res://Scenes/BallProjection.tscn"
+### GAME VARIABLE ###
+const ENEMY_NORMAL_POSITION = Vector2(288, 48)
 const GAME_SIZE = Vector2(576, 1024)
-const MAX_VELOCITY = 2000
 
+### COLLISION VARIABLE ###
+const ACCELERATE_COLLISION_PADDLE = 0.2
+const ACCELERATE_COLLISION_OBSTACLE = 0.05
 
-#onready var ball_size = round($CollisionShape2D.shape.radius * 2)
-onready var ball_size = round($CollisionShape2D.shape.extents.x)
+### BALL VARIABLE ###
+const BASE_VELOCITY = 500
+const MAX_VELOCITY = 5000
+var destination = Vector2(0, 0)
+var velocity_modifier = 1
 var velocity
-var has_projection = false
+
+### RAY PROJECTION ###
+onready var rays = {
+	1 : $Ray1,
+	2 : $Ray2
+	}
+
 
 func _ready():
-	randomize()
-	position = GAME_SIZE/2
+	setup()
+
+
+func setup():
+	destination = Vector2(0, 0)
+	velocity_modifier = 1
 	var new_velocity = [0, 0]
 	for i in range(2):
 		while new_velocity[i] <= 0.5 and new_velocity[i] >= -0.5:
 			new_velocity[i] = (rand_range(0, 3) - 1)
-	velocity = Vector2(new_velocity[0], new_velocity[1]).normalized() * SPEED
-	print("Ball Spawned : " + str(velocity))
+	velocity = Vector2(new_velocity[0], new_velocity[1]).normalized() * BASE_VELOCITY
 
 
 func _physics_process(delta):
+	if velocity == null:
+		return
 	var collision = move_and_collide(velocity * delta)
 	if collision:
 		velocity = velocity.bounce(collision.normal)
-		SPEED_up(1.1)
+		if collision.collider.name == "Enemy":
+			destination = ENEMY_NORMAL_POSITION
 		if collision.collider.is_in_group("Paddle"):
-			get_node("/root/Game/").create_projection()
-	if position.y < ball_size * 2:
-		ball_out("top")
-	if position.y > (GAME_SIZE.y - ball_size * 2):
-		ball_out("bottom")
+			velocity_modifier += ACCELERATE_COLLISION_PADDLE
+		if collision.collider.is_in_group("Obstacle"):
+			velocity_modifier += ACCELERATE_COLLISION_OBSTACLE
+	ray_cast()
 
 
-func SPEED_up(modifier):
-	velocity *= modifier
+func ray_cast():
+	rays[1].cast_to = velocity * 3
+	if rays[1].is_colliding():
+		if rays[1].get_collider().name == "BallDetector":
+			rays[2].cast_to = Vector2(0, 0)
+			destination = rays[1].get_collision_point()
+		elif rays[1].get_collision_normal() != Vector2():
+				rays[2].global_position = rays[1].get_collision_point()
+				rays[2].cast_to = rays[1].cast_to.bounce(rays[1].get_collision_normal())
+				if rays[2].is_colliding() && rays[2].get_collider().name == "BallDetector":
+					destination = rays[2].get_collision_point()
+
+
+func check_velocity_limit():
 	if velocity.x > MAX_VELOCITY:
 		velocity.x = MAX_VELOCITY
 	if velocity.x < -MAX_VELOCITY:
@@ -49,23 +73,6 @@ func SPEED_up(modifier):
 		velocity.y = MAX_VELOCITY
 	if velocity.y < -MAX_VELOCITY:
 		velocity.y = -MAX_VELOCITY
-	print(velocity)
-
-
-func ball_out(side):
-	var label
-	if side == "top":
-		label = get_node("/root/Game/Score/Bottom")
-	if side == "bottom":
-		label = get_node("/root/Game/Score/Top")
-	var current_score = int(label.get_text())
-	label.set_text(str(current_score + 1))
-	get_node("/root/Game/").check_ball_status()
-	queue_free()
-
-
-func create_projection():
-	var projection = load(PROJECTION_PATH).instance()
-	projection.spawn(position, velocity)
-	get_node("/root/Game/").add_child(projection)
-	has_projection = true
+	if abs(velocity.x) > abs(velocity.y) * 2/3:
+		velocity.x *= 0.7
+		velocity.y *= 1.1

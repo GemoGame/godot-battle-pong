@@ -1,11 +1,13 @@
 extends "res://Scripts/Paddle.gd"
 
-### INPUT ###
-const DIFFERENCE_TOLERANCE = 5
+### PADDLE VARIABLE ###
+const NORMAL_POSITION = Vector2(288, 976)
+
+### INPUT VARIABLE###
 var input_position = Vector2(576/2, 0)
 
 func _ready():
-	position = Vector2(288, 980)
+	position = NORMAL_POSITION
 
 
 func has_reached_input_target():
@@ -15,12 +17,7 @@ func has_reached_input_target():
 func _physics_process(delta):
 	if Input.is_action_pressed("ui_touch"):
 		input_position = get_global_mouse_position()
-		if position.x < input_position.x:
-			velocity.x = SPEED
-			print("Right")
-		elif position.x > input_position.x:
-			velocity.x = -SPEED
-			print("Left")
+		calculate_position_difference(input_position)
 #	if Input.is_action_pressed("ui_right):
 #		velocity.x = SPEED
 #		print("Right")
@@ -32,4 +29,7 @@ func _physics_process(delta):
 #		print("Released")
 	if has_reached_input_target() or is_at_edge():
 		velocity.x = 0
-	move_and_collide(velocity * delta)
+	var collision = move_and_collide(velocity * delta)
+	if collision:
+		if collision.collider.is_in_group("Ball"):
+			calculate_reflect_difference(collision.collider)

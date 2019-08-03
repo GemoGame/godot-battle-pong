@@ -5,3 +5,4 @@
 
 [node name="Player" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
+DIFFERENCE_TOLERANCE = 5
