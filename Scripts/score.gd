@@ -18,7 +18,7 @@ func ball_out(ball, side):
 		label = $Top
 	var current_score = int(label.get_text())
 	label.set_text(str(current_score + 1))
-	get_parent().get_node("BallController").reset_ball_state(ball)
+	ball.destroy()
 
 
 func _on_TopArea_body_entered(body):

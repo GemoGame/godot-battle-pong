@@ -31,7 +31,7 @@ extra_spacing_bottom = -100
 extra_spacing_char = 6
 font_data = ExtResource( 3 )
 
-[node name="SplashPanel" instance=ExtResource( 1 )]
+[node name="SplashPanel" index="0" instance=ExtResource( 1 )]
 modulate = Color( 1, 1, 1, 1 )
 script = SubResource( 1 )
 

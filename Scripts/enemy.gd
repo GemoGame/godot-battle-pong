@@ -20,9 +20,7 @@ func get_target():
 func get_closest_ball():
 	var closest_ball = null
 	for ball in get_tree().get_nodes_in_group("Ball"):
-		if closest_ball == null:
-			closest_ball = ball
-		if ball.position.y <= closest_ball.position.y and ball.velocity.y <= 0:
+		if closest_ball == null || ball.position.y <= closest_ball.position.y and ball.velocity.y <= 0:
 			closest_ball = ball
 	return closest_ball
 
