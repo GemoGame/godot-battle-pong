@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Images/Button/next.png" type="Texture" id=1]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Button
+
+func _on_Next_pressed():
+	SoundManager.play_effect(\"general\", \"button_pressed\")
+"
+
+[node name="Next" type="Button"]
+margin_left = 500.0
+margin_top = 450.0
+margin_right = 576.0
+margin_bottom = 520.0
+icon = ExtResource( 1 )
+flat = true
+script = SubResource( 1 )
+[connection signal="pressed" from="." to="." method="_on_Next_pressed"]

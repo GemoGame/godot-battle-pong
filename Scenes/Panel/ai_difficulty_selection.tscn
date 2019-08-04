@@ -1,0 +1,99 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scenes/Panel/panel_base.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Fonts/changa/Changa-Bold.ttf" type="DynamicFontData" id=2]
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends \"res://Scripts/panel_base.gd\"
+
+
+func _ready():
+	set_modulate(Color(1, 1, 1, 0))
+	fade_in()
+
+func _on_Easy_pressed():
+	get_tree().change_scene(\"res://Scenes/game_easy.tscn\")
+
+
+func _on_Normal_pressed():
+	get_tree().change_scene(\"res://Scenes/game_normal.tscn\")
+
+
+func _on_Hard_pressed():
+	get_tree().change_scene(\"res://Scenes/game_hard.tscn\")
+"
+
+[sub_resource type="DynamicFont" id=1]
+size = 50
+font_data = ExtResource( 2 )
+
+[node name="PanelBase" index="0" instance=ExtResource( 1 )]
+modulate = Color( 1, 1, 1, 1 )
+script = SubResource( 2 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." index="2"]
+margin_left = 161.593
+margin_top = 291.498
+margin_right = 411.593
+margin_bottom = 816.498
+custom_constants/separation = 75
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Easy" type="Button" parent="VBoxContainer" index="0"]
+editor/display_folded = true
+margin_right = 250.0
+margin_bottom = 125.0
+rect_min_size = Vector2( 250, 125 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Label" type="Label" parent="VBoxContainer/Easy" index="0"]
+margin_left = 21.0527
+margin_top = 10.5264
+margin_right = 225.053
+margin_bottom = 103.526
+custom_fonts/font = SubResource( 1 )
+text = "EZ MODO"
+
+[node name="Normal" type="Button" parent="VBoxContainer" index="1"]
+editor/display_folded = true
+margin_top = 200.0
+margin_right = 250.0
+margin_bottom = 325.0
+rect_min_size = Vector2( 250, 125 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Label" type="Label" parent="VBoxContainer/Normal" index="0"]
+margin_left = 21.0527
+margin_top = 10.5264
+margin_right = 225.053
+margin_bottom = 103.526
+custom_fonts/font = SubResource( 1 )
+text = "NORMIES"
+
+[node name="Hard" type="Button" parent="VBoxContainer" index="2"]
+editor/display_folded = true
+margin_top = 400.0
+margin_right = 250.0
+margin_bottom = 525.0
+rect_min_size = Vector2( 250, 125 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Label" type="Label" parent="VBoxContainer/Hard" index="0"]
+margin_left = 21.0527
+margin_top = 10.5264
+margin_right = 225.053
+margin_bottom = 103.526
+custom_fonts/font = SubResource( 1 )
+text = "LUNATIC"
+align = 1
+[connection signal="pressed" from="VBoxContainer/Easy" to="." method="_on_Easy_pressed"]
+[connection signal="pressed" from="VBoxContainer/Normal" to="." method="_on_Normal_pressed"]
+[connection signal="pressed" from="VBoxContainer/Hard" to="." method="_on_Hard_pressed"]

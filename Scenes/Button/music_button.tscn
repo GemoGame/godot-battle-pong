@@ -1,0 +1,25 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Images/Button/musicOnNormal.png" type="Texture" id=1]
+[ext_resource path="res://Scripts/music_button.gd" type="Script" id=2]
+[ext_resource path="res://Images/Button/musicOnClicked.png" type="Texture" id=3]
+[ext_resource path="res://Images/Button/musicOffNormal.png" type="Texture" id=4]
+[ext_resource path="res://Images/Button/musicOffClicked.png" type="Texture" id=5]
+
+
+
+
+
+
+[node name="MusicButton" type="TextureButton"]
+margin_left = 158.438
+margin_top = 549.215
+margin_right = 414.438
+margin_bottom = 695.215
+texture_normal = ExtResource( 1 )
+script = ExtResource( 2 )
+on_normal = ExtResource( 1 )
+on_pressed = ExtResource( 3 )
+off_normal = ExtResource( 4 )
+off_pressed = ExtResource( 5 )
+[connection signal="pressed" from="." to="." method="_on_music_button_pressed"]

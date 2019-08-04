@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Images/Button/ConfigNormal.png" type="Texture" id=1]
+[ext_resource path="res://Images/Button/ConfigClicked.png" type="Texture" id=2]
+
+
+
+
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends TextureButton
+
+func _on_Settings_pressed():
+	SoundManager.play_effect(\"general\", \"button_pressed\")
+	get_tree().change_scene(\"res://Menu/scenes/settings_panel.tscn\")
+"
+
+[node name="Settings" type="TextureButton"]
+margin_left = 11.0804
+margin_top = 11.0804
+margin_right = 139.08
+margin_bottom = 139.08
+rect_scale = Vector2( 0.4, 0.4 )
+texture_normal = ExtResource( 1 )
+texture_pressed = ExtResource( 2 )
+script = SubResource( 1 )
+[connection signal="pressed" from="." to="." method="_on_Settings_pressed"]

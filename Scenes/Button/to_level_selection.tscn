@@ -1,0 +1,30 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Images/Button/quitNormal.png" type="Texture" id=1]
+[ext_resource path="res://Images/Button/quitClicked.png" type="Texture" id=2]
+
+
+
+
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends TextureButton
+
+
+
+
+func _on_LevelSelectButton_pressed():
+	SoundManager.play_effect(\"general\", \"button_pressed\")
+	get_tree().change_scene(\"res://Menu/scenes/level_controller.tscn\")
+"
+
+[node name="LevelSelectButton" type="TextureButton"]
+margin_left = 10.9789
+margin_top = 14.6913
+margin_right = 138.979
+margin_bottom = 142.691
+rect_scale = Vector2( 0.5, 0.5 )
+texture_normal = ExtResource( 1 )
+texture_pressed = ExtResource( 2 )
+script = SubResource( 1 )
+[connection signal="pressed" from="." to="." method="_on_LevelSelectButton_pressed"]

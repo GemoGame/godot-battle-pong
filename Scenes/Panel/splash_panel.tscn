@@ -1,0 +1,61 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Scenes/Panel/panel_base.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Anims/Panel/splash_panel.tres" type="Animation" id=2]
+[ext_resource path="res://Fonts/changa/Changa-Bold.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://Images/Button/playNormal.png" type="Texture" id=4]
+[ext_resource path="res://Images/Button/playClicked.png" type="Texture" id=5]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends \"res://Scripts/panel_base.gd\"
+
+
+func _ready():
+	$AnimationPlayer.play(\"splash\")
+
+
+func _on_PlayButton_pressed():
+	fade_out()
+
+
+func _on_AnimationPlayer_animation_finished(anim_name):
+	if anim_name == \"fade_out\":
+		get_tree().change_scene(\"res://Scenes/Panel/ai_difficulty_selection.tscn\")
+"
+
+[sub_resource type="DynamicFont" id=2]
+size = 90
+outline_size = 6
+extra_spacing_top = -10
+extra_spacing_bottom = -100
+extra_spacing_char = 6
+font_data = ExtResource( 3 )
+
+[node name="SplashPanel" instance=ExtResource( 1 )]
+modulate = Color( 1, 1, 1, 1 )
+script = SubResource( 1 )
+
+[node name="AnimationPlayer" parent="." index="1"]
+anims/splash = ExtResource( 2 )
+
+[node name="Title" type="Label" parent="." index="2"]
+margin_left = 129.421
+margin_top = 180.211
+margin_right = 447.421
+margin_bottom = 369.211
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0.396078, 0.427451, 0.435294, 1 )
+text = "BATTLE
+PONG"
+align = 1
+
+[node name="PlayButton" type="TextureButton" parent="." index="3"]
+margin_left = 191.152
+margin_top = 611.084
+margin_right = 703.152
+margin_bottom = 995.084
+rect_scale = Vector2( 0.4, 0.4 )
+texture_normal = ExtResource( 4 )
+texture_pressed = ExtResource( 5 )
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
+[connection signal="pressed" from="PlayButton" to="." method="_on_PlayButton_pressed"]
