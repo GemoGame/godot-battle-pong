@@ -16,6 +16,7 @@ func _physics_process(delta):
 	if Input.is_action_pressed("ui_touch"):
 		input_position = get_global_mouse_position()
 		calculate_position_difference(input_position)
+
 	if has_align_target(input_position) or is_at_edge():
 		velocity.x = 0
 	

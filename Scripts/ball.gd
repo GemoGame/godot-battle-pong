@@ -10,12 +10,17 @@ const ACCELERATE_COLLISION_PADDLE = 0.2
 const ACCELERATE_COLLISION_OBSTACLE = 0.05
 
 ### BALL VARIABLE ###
+const BALL_SIZE = 15
 const BALL_TEXTURE = preload("res://Images/ball.png")
+const BALL_EXPLOSION = preload("res://Scenes/ball_explosion_effect.tscn")
 const BASE_VELOCITY = 500
 const MAX_VELOCITY = 5000
 var destination = Vector2(0, 0)
 var velocity_modifier = 1
 var velocity
+
+### Power Up ###
+const SPEED_MODIFIER = 1.1
 
 
 ### RAY PROJECTION ###
@@ -65,14 +70,7 @@ func randomize_velocity():
 	velocity = Vector2(new_velocity[0], new_velocity[1]).normalized() * BASE_VELOCITY
 
 
-func destroy():
-	set_physics_process(false)
-	$Ray1.visible = false
-	$Ray2.visible = false
-	$AnimationPlayer.play("destroy")
-
-
-func keep_vector_limit(vector):
+func get_limited_vector(vector):
 	if vector.x > MAX_VELOCITY:
 		vector.x = MAX_VELOCITY
 	if vector.x < -MAX_VELOCITY:
@@ -92,20 +90,24 @@ func _physics_process(delta):
 		return
 	var collision = move_and_collide(velocity * delta)
 	if collision:
+		var collide = collision.collider
 #		print("Velocity Modifier Before : " + str(velocity_modifier))
-		velocity = velocity.bounce(collision.normal)
-		if collision.collider.name == "Enemy":
-			destination = ENEMY_NORMAL_POSITION
-		if collision.collider.is_in_group("Paddle"):
-			velocity_modifier += ACCELERATE_COLLISION_PADDLE
-		if collision.collider.is_in_group("Obstacle"):
+		if !collide.is_in_group("PowerUp"):
+			velocity = velocity.bounce(collision.normal)
+		if collide.is_in_group("Obstacle"):
 			velocity_modifier += ACCELERATE_COLLISION_OBSTACLE
-#		print("Velocity Modifier After : " + str(velocity_modifier))
-		velocity = keep_vector_limit(velocity)
+		if collide.is_in_group("Paddle"):
+			velocity_modifier += ACCELERATE_COLLISION_PADDLE
+		if collide.name == "Enemy":
+			destination = ENEMY_NORMAL_POSITION
+		velocity = get_limited_vector(velocity)
 	ray_cast()
 #	print("Velocity : " + str(velocity))
 #	print("Length : " + str(velocity.length()))
 #	print("Velocity Modifier : " + str(velocity_modifier))
+
+
+
 
 
 # -- WARNING NSFW CONTENT---
@@ -119,16 +121,19 @@ func _physics_process(delta):
 func ray_cast():
 	rays[1]["collision"].cast_to = velocity.normalized() * 1500
 	rays[1]["visual"].set_point_position(0, Vector2(0, 0))
-	rays[1]["visual"].set_point_position(1, rays[1]["collision"].cast_to)
 	if rays[1]["collision"].is_colliding():
+		var distance = position.distance_to(rays[1]["collision"].get_collision_point())
+		rays[1]["visual"].set_point_position(1, rays[1]["collision"].cast_to.normalized() * distance)
 		rays[2]["visual"].set_point_position(0, Vector2(0, 0))
 		rays[2]["visual"].set_point_position(1, Vector2(0, 0))
 		if rays[1]["collision"].get_collider().name == "BallDetector":
 			rays[2]["collision"].cast_to = Vector2(0, 0)
 			destination = rays[1]["collision"].get_collision_point()
+		elif rays[1]["collision"].get_collider().name == "HorizontalBorder":
+			rays[2]["collision"].cast_to = Vector2(0, 0)
 		elif rays[1]["collision"].get_collision_normal() != Vector2():
 			rays[2]["collision"].global_position = rays[1]["collision"].get_collision_point()
-			rays[2]["collision"].cast_to = keep_vector_limit(rays[1]["collision"].cast_to.bounce(rays[1]["collision"].get_collision_normal())).normalized() * 1500
+			rays[2]["collision"].cast_to = get_limited_vector(rays[1]["collision"].cast_to.bounce(rays[1]["collision"].get_collision_normal())).normalized() * 1500 # OOF
 			rays[2]["visual"].set_point_position(1, rays[2]["collision"].cast_to)
 			if rays[2]["collision"].is_colliding() && rays[2]["collision"].get_collider().name == "BallDetector":
 				destination = rays[2]["collision"].get_collision_point()
@@ -138,4 +143,7 @@ func ray_cast():
 
 func _on_AnimationPlayer_animation_finished(anim_name):
 	if anim_name == "destroy":
+#		print($CollisionShape2D.disabled)
+#		ball_controller.ball_destroyed()
+#		queue_free()
 		setup()

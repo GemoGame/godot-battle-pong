@@ -9,6 +9,7 @@ export (int) var DIFFERENCE_TOLERANCE = 300
 export (int) var PARTICLE_THRESHOLD = 5
 export (int) var PADDLE_SEGMENT = 5
 onready var PADDLE_SIZE = $CollisionShape2D.shape.extents
+onready var STARTING_POSITION = position
 var velocity = Vector2(0, 0)
 
 
@@ -58,3 +59,5 @@ func _process(delta):
 		$ParticleLeft.emitting = true
 	elif velocity.x < PARTICLE_THRESHOLD:
 		$ParticleRight.emitting = true
+	if position.y != STARTING_POSITION.y:
+		position.y = STARTING_POSITION.y

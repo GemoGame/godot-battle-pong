@@ -6,8 +6,10 @@ export (Texture) var on_pressed
 export (Texture) var off_normal
 export (Texture) var off_pressed
 
+
 func _ready():
 	update_texture()
+
 
 func update_texture():
 	if ConfigManager.music_on:

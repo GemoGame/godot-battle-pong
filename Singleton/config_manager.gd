@@ -6,7 +6,7 @@ var music_on = true
 
 
 func _ready():
-	load_config()	
+	load_config()
 
 
 func save_config():

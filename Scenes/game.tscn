@@ -1,11 +1,12 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
-[ext_resource path="res://Images/background.png" type="Texture" id=1]
-[ext_resource path="res://Scripts/score.gd" type="Script" id=2]
+[ext_resource path="res://Scripts/game.gd" type="Script" id=1]
+[ext_resource path="res://Images/background.png" type="Texture" id=2]
 [ext_resource path="res://Fonts/changa/Changa-ExtraBold.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://Scripts/ball_controller.gd" type="Script" id=4]
 [ext_resource path="res://Scenes/enemy.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/player.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/power_up.tscn" type="PackedScene" id=7]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 20, 512 )
@@ -13,20 +14,24 @@ extents = Vector2( 20, 512 )
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 288, 20 )
 
-[sub_resource type="RectangleShape2D" id=3]
-extents = Vector2( 300, 35 )
-
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=3]
 size = 40
 font_data = ExtResource( 3 )
 
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 300, 35 )
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 288, 30 )
+
 [node name="Game" type="Node2D"]
 position = Vector2( 0, 1 )
+script = ExtResource( 1 )
 
 [node name="Background" type="TextureRect" parent="."]
 margin_right = 576.0
 margin_bottom = 1024.0
-texture = ExtResource( 1 )
+texture = ExtResource( 2 )
 __meta__ = {
 "_edit_lock_": true
 }
@@ -76,30 +81,9 @@ shape = SubResource( 2 )
 
 [node name="Score" type="Control" parent="."]
 editor/display_folded = true
-script = ExtResource( 2 )
 __meta__ = {
 "_edit_lock_": true
 }
-
-[node name="TopArea" type="Area2D" parent="Score"]
-editor/display_folded = true
-position = Vector2( 288, 35 )
-collision_layer = 0
-collision_mask = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Score/TopArea"]
-position = Vector2( -2.93628, -2.93634 )
-shape = SubResource( 3 )
-
-[node name="BottomArea" type="Area2D" parent="Score"]
-editor/display_folded = true
-position = Vector2( 288, 1000 )
-collision_layer = 0
-collision_mask = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Score/BottomArea"]
-position = Vector2( -2.93628, -2.93634 )
-shape = SubResource( 3 )
 
 [node name="Top" type="Label" parent="Score"]
 margin_left = 489.0
@@ -108,7 +92,7 @@ margin_right = 573.0
 margin_bottom = 497.0
 grow_horizontal = 0
 grow_vertical = 2
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 3 )
 text = "0"
 align = 1
 
@@ -119,7 +103,7 @@ margin_right = 552.0
 margin_bottom = 547.0
 grow_horizontal = 0
 grow_vertical = 2
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 3 )
 text = ".   ."
 align = 2
 
@@ -130,20 +114,61 @@ margin_right = 573.0
 margin_bottom = 617.0
 grow_horizontal = 0
 grow_vertical = 2
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 3 )
 text = "0"
 align = 1
 
 [node name="BallController" type="Node2D" parent="."]
+editor/display_folded = true
 script = ExtResource( 4 )
-total_ball = 2
+
+[node name="TopArea" type="Area2D" parent="BallController"]
+editor/display_folded = true
+position = Vector2( 288, 35 )
+gravity = 0.0
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BallController/TopArea"]
+position = Vector2( -2.93628, -2.93634 )
+shape = SubResource( 4 )
+
+[node name="BottomArea" type="Area2D" parent="BallController"]
+editor/display_folded = true
+position = Vector2( 288, 1000 )
+gravity = 0.0
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BallController/BottomArea"]
+position = Vector2( -2.93628, -2.93634 )
+shape = SubResource( 4 )
 
 [node name="Enemy" parent="." instance=ExtResource( 5 )]
 position = Vector2( 288, 48 )
+collision_mask = 1
 DIFFERENCE_TOLERANCE = 20
 EASY_MODE = false
 
 [node name="Player" parent="." instance=ExtResource( 6 )]
 position = Vector2( 288, 976 )
-[connection signal="body_entered" from="Score/TopArea" to="Score" method="_on_TopArea_body_entered"]
-[connection signal="body_entered" from="Score/BottomArea" to="Score" method="_on_BottomArea_body_entered"]
+collision_mask = 1
+
+[node name="BallDetector" type="StaticBody2D" parent="."]
+editor/display_folded = true
+position = Vector2( 288, 100 )
+collision_layer = 8
+collision_mask = 0
+
+[node name="BallDetector" type="CollisionShape2D" parent="BallDetector"]
+shape = SubResource( 5 )
+
+[node name="PowerUp" parent="." instance=ExtResource( 7 )]
+position = Vector2( 163.634, 481.163 )
+scale = Vector2( 1, 1 )
+
+[node name="PowerUp2" parent="." instance=ExtResource( 7 )]
+position = Vector2( 387.657, 467.526 )
+scale = Vector2( 1, 1 )
+[connection signal="body_entered" from="BallController/TopArea" to="BallController" method="_on_TopArea_body_entered"]
+[connection signal="body_entered" from="BallController/BottomArea" to="BallController" method="_on_BottomArea_body_entered"]

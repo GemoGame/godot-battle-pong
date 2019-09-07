@@ -1,4 +1,4 @@
-extends "res://Scripts/paddle.gd"
+ extends "res://Scripts/paddle.gd"
 
 ### GAME VARIABEL ###
 export (bool) var EASY_MODE = true
@@ -11,10 +11,7 @@ var current_target = null
 func get_target():
 	if get_closest_ball() == null:
 		return NORMAL_POSITION
-	if EASY_MODE:
-		return get_closest_ball().position
-	else:
-		return get_closest_ball().destination
+	return get_closest_ball().position if EASY_MODE else get_closest_ball().destination # GDScript Ternary
 
 
 func get_closest_ball():

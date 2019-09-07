@@ -1,37 +1,16 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scripts/ball.gd" type="Script" id=1]
-[ext_resource path="res://Images/Explosion/explode_1.png" type="Texture" id=2]
-[ext_resource path="res://Images/Explosion/explode_2.png" type="Texture" id=3]
-[ext_resource path="res://Images/Explosion/explode_3.png" type="Texture" id=4]
-[ext_resource path="res://Images/Explosion/explode_4.png" type="Texture" id=5]
-[ext_resource path="res://Images/Explosion/explode_5.png" type="Texture" id=6]
-[ext_resource path="res://Images/Explosion/explode_6.png" type="Texture" id=7]
+[ext_resource path="res://Images/ball.png" type="Texture" id=2]
 
-[sub_resource type="CircleShape2D" id=1]
-radius = 20.0
-
-[sub_resource type="Animation" id=2]
-resource_name = "destroy"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:texture")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ) ]
-}
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 15, 15 )
 
 [node name="Ball" type="KinematicBody2D" groups=[
 "Ball",
 ]]
 collision_layer = 4
-collision_mask = 7
+collision_mask = 23
 script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -68,7 +47,4 @@ __meta__ = {
 points = PoolVector2Array( 0, 0, 0, 0 )
 width = 2.0
 default_color = Color( 0.894118, 0.807843, 0.117647, 1 )
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/destroy = SubResource( 2 )
-[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
+texture_mode = 0

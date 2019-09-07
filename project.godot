@@ -16,9 +16,14 @@ _global_script_class_icons={
 [application]
 
 config/name="Battle Pong"
-run/main_scene="res://Scenes/game.tscn"
+run/main_scene="res://Scenes/Panel/splash_panel.tscn"
 boot_splash/bg_color=Color( 0.0235294, 0.0235294, 0.0235294, 1 )
 config/icon="res://icon.png"
+
+[autoload]
+
+ConfigManager="*res://Singleton/config_manager.gd"
+SoundManager="*res://Singleton/sound_manager.tscn"
 
 [display]
 
@@ -28,8 +33,8 @@ window/size/resizable=false
 window/size/test_width=288
 window/size/test_height=512
 window/handheld/orientation="portrait"
-window/stretch/mode="viewport"
-window/stretch/aspect="expand"
+window/stretch/mode="2d"
+window/stretch/aspect="keep"
 
 [input]
 
@@ -45,6 +50,7 @@ ui_touch={
 2d_physics/layer_2="Obstacle"
 2d_physics/layer_3="Ball"
 2d_physics/layer_4="AI Detector"
+2d_physics/layer_5="Power Up"
 
 [rendering]
 

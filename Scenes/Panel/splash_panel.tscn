@@ -11,6 +11,7 @@ script/source = "extends \"res://Scripts/panel_base.gd\"
 
 
 func _ready():
+	SoundManager.play_music(\"menu\")
 	$AnimationPlayer.play(\"splash\")
 
 
