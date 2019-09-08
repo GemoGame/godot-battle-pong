@@ -1,34 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://Scenes/game_base.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Scenes/Power/power_fast.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Scenes/obstacle1.tscn" type="PackedScene" id=3]
 
-[node name="Game" index="0" instance=ExtResource( 1 )]
+[node name="Game" instance=ExtResource( 1 )]
 
-[node name="Enemy" parent="." index="4"]
+[node name="Enemy" parent="." index="5"]
 DIFFERENCE_TOLERANCE = 100
-
-[node name="PowerFast" parent="." index="7"]
-position = Vector2( 61.4487, 556.709 )
-
-[node name="PowerSlow" parent="." index="8"]
-position = Vector2( 294.506, 494.249 )
-
-[node name="PowerSmall" parent="." index="9"]
-position = Vector2( 63.1587, 490.308 )
-
-[node name="PowerBig" parent="." index="10"]
-position = Vector2( 293.042, 554.181 )
-
-[node name="PowerSmall2" parent="." index="11"]
-position = Vector2( 522.255, 494.095 )
-
-[node name="PowerFast2" parent="." index="12" instance=ExtResource( 2 )]
-position = Vector2( 518.087, 561.19 )
-
-[node name="Control" parent="." index="13" instance=ExtResource( 3 )]
-position = Vector2( 177.998, 520.569 )
-
-[node name="Control2" parent="." index="14" instance=ExtResource( 3 )]
-position = Vector2( 397.76, 522.327 )

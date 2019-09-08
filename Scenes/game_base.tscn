@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Scripts/game.gd" type="Script" id=1]
 [ext_resource path="res://Images/background.png" type="Texture" id=2]
@@ -8,10 +8,8 @@
 [ext_resource path="res://Scenes/player.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Scenes/pause.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Scenes/end_game.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Scenes/Power/power_fast.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Scenes/Power/power_slow.tscn" type="PackedScene" id=10]
-[ext_resource path="res://Scenes/Power/power_small.tscn" type="PackedScene" id=11]
-[ext_resource path="res://Scenes/Power/power_big.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Scenes/Item/item_controller.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scenes/Obstacle/obstacle_controller.tscn" type="PackedScene" id=10]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 20, 512 )
@@ -30,37 +28,6 @@ extents = Vector2( 300, 35 )
 
 [sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 288, 30 )
-
-[sub_resource type="GDScript" id=6]
-script/source = "extends Node2D
-
-
-onready var items = [
-	preload(\"res://Scenes/Item/item_raycast.tscn\"),
-	preload(\"res://Scenes/Item/item_fast.tscn\"),
-	preload(\"res://Scenes/Item/item_slow.tscn\"),
-]
-
-
-func activated_raycast():
-	Game.is_raycast_active = true
-	$RaycastTimer.start()
-
-
-func drop_item():
-	# Randomize Item
-	var random_item_index = round(rand_range(0, items.size() - 1))
-	add_child(items[random_item_index].instance())
-
-
-func _on_RaycastTimer_timeout():
-	Game.is_raycast_active = false
-
-
-func _on_DropItem_timeout():
-	drop_item()
-	print(\"Item dropped\")
-"
 
 [node name="Game" type="Node2D"]
 position = Vector2( 0, 1 )
@@ -121,6 +88,10 @@ shape = SubResource( 2 )
 [node name="Score" type="Node2D" parent="."]
 editor/display_folded = true
 z_index = 3
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
 
 [node name="Top" type="Label" parent="Score"]
 margin_left = -10.3254
@@ -213,35 +184,8 @@ SPEED = 700
 
 [node name="EndGame" parent="." instance=ExtResource( 8 )]
 
-[node name="ItemController" type="Node2D" parent="."]
-position = Vector2( 173.884, 539.908 )
-scale = Vector2( 0.6, 0.6 )
-script = SubResource( 6 )
+[node name="ItemController" parent="." instance=ExtResource( 9 )]
 
-[node name="RaycastTimer" type="Timer" parent="ItemController"]
-wait_time = 5.0
-one_shot = true
-
-[node name="DropItem" type="Timer" parent="ItemController"]
-wait_time = 3.0
-autostart = true
-
-[node name="PowerFast" parent="." instance=ExtResource( 9 )]
-position = Vector2( 173.884, 539.908 )
-
-[node name="PowerSlow" parent="." instance=ExtResource( 10 )]
-position = Vector2( 426.248, 531.48 )
-
-[node name="PowerSmall" parent="." instance=ExtResource( 11 )]
-position = Vector2( 63.1587, 540.71 )
-
-[node name="PowerBig" parent="." instance=ExtResource( 12 )]
-position = Vector2( 293.042, 535.565 )
-scale = Vector2( 0.6, 0.6 )
-
-[node name="PowerSmall2" parent="." instance=ExtResource( 11 )]
-position = Vector2( 526.336, 533.546 )
+[node name="ObstacleController" parent="." instance=ExtResource( 10 )]
 [connection signal="body_entered" from="BallController/TopArea" to="BallController" method="_on_TopArea_body_entered"]
 [connection signal="body_entered" from="BallController/BottomArea" to="BallController" method="_on_BottomArea_body_entered"]
-[connection signal="timeout" from="ItemController/RaycastTimer" to="ItemController" method="_on_RaycastTimer_timeout"]
-[connection signal="timeout" from="ItemController/DropItem" to="ItemController" method="_on_DropItem_timeout"]

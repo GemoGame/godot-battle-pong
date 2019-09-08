@@ -19,11 +19,12 @@ func _on_PowerUp_body_entered(body):
 "
 
 [node name="PowerFast" index="0" instance=ExtResource( 1 )]
+scale = Vector2( 0.8, 0.8 )
 script = SubResource( 1 )
 
 [node name="AnimatedSprite" parent="." index="0"]
 rotation = 2.55126
-frame = 3
+frame = 2
 playing = true
 
 [node name="AudioStreamPlayer2D" parent="." index="3"]

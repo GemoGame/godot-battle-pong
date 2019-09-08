@@ -28,7 +28,7 @@ animations = [ {
 } ]
 
 [node name="PowerBig" index="0" instance=ExtResource( 1 )]
-scale = Vector2( 1, 1 )
+scale = Vector2( 0.8, 0.8 )
 script = SubResource( 1 )
 
 [node name="AnimatedSprite" parent="." index="0"]

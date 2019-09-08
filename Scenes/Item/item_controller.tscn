@@ -1,0 +1,48 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="GDScript" id=6]
+script/source = "extends Node2D
+
+
+onready var items = [
+	preload(\"res://Scenes/Item/item_raycast.tscn\"),
+	preload(\"res://Scenes/Item/item_fast.tscn\"),
+	preload(\"res://Scenes/Item/item_slow.tscn\"),
+]
+
+
+func activated_raycast():
+	Game.is_raycast_active = true
+	$RaycastTimer.start()
+
+
+func drop_item():
+	# Randomize Item
+	var random_item_index = round(rand_range(0, items.size() - 1))
+	add_child(items[random_item_index].instance())
+
+
+func _on_RaycastTimer_timeout():
+	Game.is_raycast_active = false
+
+
+func _on_DropItem_timeout():
+	drop_item()
+	print(\"Item dropped\")
+"
+
+[node name="ItemController" type="Node2D"]
+editor/display_folded = true
+position = Vector2( 173.884, 539.908 )
+scale = Vector2( 0.6, 0.6 )
+script = SubResource( 6 )
+
+[node name="RaycastTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="DropItem" type="Timer" parent="."]
+wait_time = 3.0
+autostart = true
+[connection signal="timeout" from="RaycastTimer" to="." method="_on_RaycastTimer_timeout"]
+[connection signal="timeout" from="DropItem" to="." method="_on_DropItem_timeout"]

@@ -4,7 +4,7 @@
 
 [node name="Game" instance=ExtResource( 1 )]
 
-[node name="Enemy" parent="." index="4"]
+[node name="Enemy" parent="." index="5"]
 SPEED = 300
 DIFFERENCE_TOLERANCE = 10
 EASY_MODE = true
