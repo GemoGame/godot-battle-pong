@@ -6,11 +6,6 @@
 [ext_resource path="res://Images/Button/musicOffNormal.png" type="Texture" id=4]
 [ext_resource path="res://Images/Button/musicOffClicked.png" type="Texture" id=5]
 
-
-
-
-
-
 [node name="MusicButton" type="TextureButton"]
 margin_left = 158.438
 margin_top = 549.215

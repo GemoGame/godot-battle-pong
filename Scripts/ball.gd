@@ -19,8 +19,16 @@ var destination = Vector2(0, 0)
 var velocity_modifier = 1
 var velocity
 
-### Power Up ###
-const SPEED_MODIFIER = 1.1
+### SPEED_POWER UP ###
+const FAST_MODIFIER = 2.5 # Larger = Faster
+const SLOW_MODIFIER = 0.333
+enum {NORMAL_SPEED, FAST, SLOW}
+var SPEED_POWER
+
+### SIZE POWER UP ###
+const SIZE_MODIFIER = 2
+enum {NORMAL_SIZE, BIG, SMALL}
+var SIZE_POWER
 
 
 ### RAY PROJECTION ###
@@ -47,6 +55,8 @@ func setup():
 	$Ray2.visible = true
 	destination = Vector2(0, 0)
 	velocity_modifier = 1
+	SPEED_POWER = NORMAL_SPEED
+	SIZE_POWER = NORMAL_SIZE
 	
 	# Randomizing certain variable
 	randomize_velocity()
@@ -92,14 +102,16 @@ func _physics_process(delta):
 	if collision:
 		var collide = collision.collider
 #		print("Velocity Modifier Before : " + str(velocity_modifier))
-		if !collide.is_in_group("PowerUp"):
+		if !collide.is_in_group("SPEED_POWERUp"):
 			velocity = velocity.bounce(collision.normal)
-		if collide.is_in_group("Obstacle"):
+		if collide.is_in_group("Obstacle") and SPEED_POWER == NORMAL_SPEED:
 			velocity_modifier += ACCELERATE_COLLISION_OBSTACLE
-		if collide.is_in_group("Paddle"):
+		if collide.is_in_group("Paddle") and SPEED_POWER == NORMAL_SPEED:
 			velocity_modifier += ACCELERATE_COLLISION_PADDLE
+			$AudioStreamPlayer2D.play()
 		if collide.name == "Enemy":
 			destination = ENEMY_NORMAL_POSITION
+	if SPEED_POWER == NORMAL_SPEED:
 		velocity = get_limited_vector(velocity)
 	ray_cast()
 #	print("Velocity : " + str(velocity))
@@ -107,7 +119,56 @@ func _physics_process(delta):
 #	print("Velocity Modifier : " + str(velocity_modifier))
 
 
+func power_fast():
+	normalized_velocity_power()
+	velocity *= FAST_MODIFIER
+	SPEED_POWER = FAST
+	$Fast.start()
 
+
+func power_slow():
+	normalized_velocity_power()
+	velocity *= SLOW_MODIFIER
+	SPEED_POWER = SLOW
+	$Slow.start()
+
+
+func normalized_velocity_power():
+	$Fast.stop()
+	$Slow.stop()
+	if SPEED_POWER == FAST:
+		velocity /= FAST_MODIFIER
+	if SPEED_POWER == SLOW:
+		velocity /= SLOW_MODIFIER
+	SPEED_POWER = NORMAL_SPEED
+
+
+func power_big():
+	normalized_size_power()
+	change_sprite_collision_scale(SIZE_MODIFIER)
+	SIZE_POWER = BIG
+	$Size.start()
+
+
+func power_small():
+	normalized_size_power()
+	change_sprite_collision_scale(float(1) / SIZE_MODIFIER)
+	SIZE_POWER = SMALL
+	$Size.start()
+
+
+func normalized_size_power():
+	$Size.stop()
+	if SIZE_POWER == BIG:
+		change_sprite_collision_scale(float(1) / SIZE_MODIFIER)
+	if SIZE_POWER == SMALL:
+		change_sprite_collision_scale(SIZE_MODIFIER)
+	SIZE_POWER = NORMAL_SIZE
+
+
+func change_sprite_collision_scale(modifier):
+	$Sprite.scale *= modifier
+	$CollisionShape2D.scale *= modifier
 
 
 # -- WARNING NSFW CONTENT---
@@ -141,9 +202,16 @@ func ray_cast():
 	rays[2]["visual"].visible = display_rays
 
 
-func _on_AnimationPlayer_animation_finished(anim_name):
-	if anim_name == "destroy":
-#		print($CollisionShape2D.disabled)
-#		ball_controller.ball_destroyed()
-#		queue_free()
-		setup()
+### SPEED_POWER UP RELATED ###
+
+func _on_Fast_timeout():
+	normalized_velocity_power()
+
+
+func _on_Slow_timeout():
+	normalized_velocity_power()
+
+
+func _on_Size_timeout():
+	normalized_size_power()
+

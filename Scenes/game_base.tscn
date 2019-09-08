@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Scripts/game.gd" type="Script" id=1]
 [ext_resource path="res://Images/background.png" type="Texture" id=2]
@@ -6,7 +6,10 @@
 [ext_resource path="res://Scripts/ball_controller.gd" type="Script" id=4]
 [ext_resource path="res://Scenes/enemy.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/player.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Scenes/power_up.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/Power/power_fast.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/Power/power_slow.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scenes/Power/power_small.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scenes/Power/power_big.tscn" type="PackedScene" id=10]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 20, 512 )
@@ -27,6 +30,7 @@ extents = Vector2( 288, 30 )
 [node name="Game" type="Node2D"]
 position = Vector2( 0, 1 )
 script = ExtResource( 1 )
+score_to_win = 20
 
 [node name="Background" type="TextureRect" parent="."]
 margin_right = 576.0
@@ -119,15 +123,21 @@ text = "0"
 align = 1
 
 [node name="BallController" type="Node2D" parent="."]
-editor/display_folded = true
 script = ExtResource( 4 )
+__meta__ = {
+"_edit_lock_": true
+}
+minimum_total_ball = 5
 
 [node name="TopArea" type="Area2D" parent="BallController"]
-editor/display_folded = true
 position = Vector2( 288, 35 )
 gravity = 0.0
 collision_layer = 0
 collision_mask = 4
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BallController/TopArea"]
 position = Vector2( -2.93628, -2.93634 )
@@ -139,6 +149,10 @@ position = Vector2( 288, 1000 )
 gravity = 0.0
 collision_layer = 0
 collision_mask = 4
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BallController/BottomArea"]
 position = Vector2( -2.93628, -2.93634 )
@@ -155,20 +169,30 @@ position = Vector2( 288, 976 )
 collision_mask = 1
 
 [node name="BallDetector" type="StaticBody2D" parent="."]
-editor/display_folded = true
 position = Vector2( 288, 100 )
 collision_layer = 8
 collision_mask = 0
 
 [node name="BallDetector" type="CollisionShape2D" parent="BallDetector"]
 shape = SubResource( 5 )
+__meta__ = {
+"_edit_group_": true
+}
 
-[node name="PowerUp" parent="." instance=ExtResource( 7 )]
-position = Vector2( 163.634, 481.163 )
-scale = Vector2( 1, 1 )
+[node name="PowerFast" parent="." instance=ExtResource( 7 )]
+position = Vector2( 173.884, 539.908 )
 
-[node name="PowerUp2" parent="." instance=ExtResource( 7 )]
-position = Vector2( 387.657, 467.526 )
-scale = Vector2( 1, 1 )
+[node name="PowerSlow" parent="." instance=ExtResource( 8 )]
+position = Vector2( 426.248, 531.48 )
+
+[node name="PowerSmall" parent="." instance=ExtResource( 9 )]
+position = Vector2( 63.1587, 540.71 )
+
+[node name="PowerBig" parent="." instance=ExtResource( 10 )]
+position = Vector2( 293.042, 535.565 )
+scale = Vector2( 0.6, 0.6 )
+
+[node name="PowerSmall2" parent="." instance=ExtResource( 9 )]
+position = Vector2( 526.336, 533.546 )
 [connection signal="body_entered" from="BallController/TopArea" to="BallController" method="_on_TopArea_body_entered"]
 [connection signal="body_entered" from="BallController/BottomArea" to="BallController" method="_on_BottomArea_body_entered"]

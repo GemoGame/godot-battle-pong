@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scripts/ball.gd" type="Script" id=1]
 [ext_resource path="res://Images/ball.png" type="Texture" id=2]
+[ext_resource path="res://Sounds/power_fast.ogg" type="AudioStream" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 15, 15 )
@@ -9,6 +10,7 @@ extents = Vector2( 15, 15 )
 [node name="Ball" type="KinematicBody2D" groups=[
 "Ball",
 ]]
+z_index = 1
 collision_layer = 4
 collision_mask = 23
 script = ExtResource( 1 )
@@ -47,4 +49,22 @@ __meta__ = {
 points = PoolVector2Array( 0, 0, 0, 0 )
 width = 2.0
 default_color = Color( 0.894118, 0.807843, 0.117647, 1 )
-texture_mode = 0
+texture_mode = 211997360
+
+[node name="Fast" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[node name="Slow" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="Size" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 3 )
+[connection signal="timeout" from="Fast" to="." method="_on_Fast_timeout"]
+[connection signal="timeout" from="Slow" to="." method="_on_Slow_timeout"]
+[connection signal="timeout" from="Size" to="." method="_on_Size_timeout"]

@@ -16,7 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Battle Pong"
-run/main_scene="res://Scenes/Panel/splash_panel.tscn"
+run/main_scene="res://Scenes/game_base.tscn"
 boot_splash/bg_color=Color( 0.0235294, 0.0235294, 0.0235294, 1 )
 config/icon="res://icon.png"
 

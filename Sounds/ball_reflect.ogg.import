@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/ball_reflect.ogg-3a6c8860b04dd73be687b4a1af926b38.oggstr"
+
+[deps]
+
+source_file="res://Sounds/ball_reflect.ogg"
+dest_files=[ "res://.import/ball_reflect.ogg-3a6c8860b04dd73be687b4a1af926b38.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0
