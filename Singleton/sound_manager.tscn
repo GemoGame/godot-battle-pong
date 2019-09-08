@@ -11,8 +11,8 @@ var pause_position
 
 var music = {
 	\"menu\" : \"res://Sounds/menu.ogg\",
-#	\"menu\" : \"res://Sounds/bgm2.ogg\",
-	\"game\" : \"res://Sounds/bgm2.ogg\"
+	\"game_1\" : \"res://Sounds/bgm1.ogg\",
+	\"game_2\" : \"res://Sounds/bgm2.ogg\"
 }
 
 

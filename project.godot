@@ -24,13 +24,12 @@ config/icon="res://icon.png"
 
 ConfigManager="*res://Singleton/config_manager.gd"
 SoundManager="*res://Singleton/sound_manager.tscn"
-GameInfo="*res://Singleton/game_info.gd"
+Game="*res://Singleton/game_manager.gd"
 
 [display]
 
 window/size/width=576
 window/size/height=1024
-window/size/resizable=false
 window/size/test_width=288
 window/size/test_height=512
 window/handheld/orientation="portrait"

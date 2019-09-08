@@ -67,7 +67,7 @@ func setup():
 
 
 func randomize_position():
-	var x = floor(rand_range(GAME_SIZE.x/4, GAME_SIZE.x*3/4))
+	var x = floor(rand_range(100, GAME_SIZE.x - 100))
 	var y = floor(rand_range(GAME_SIZE.y/3, GAME_SIZE.y*2/3))
 	position = Vector2(x, y)
 

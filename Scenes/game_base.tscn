@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://Scripts/game.gd" type="Script" id=1]
 [ext_resource path="res://Images/background.png" type="Texture" id=2]
@@ -6,10 +6,12 @@
 [ext_resource path="res://Scripts/ball_controller.gd" type="Script" id=4]
 [ext_resource path="res://Scenes/enemy.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Scenes/player.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Scenes/Power/power_fast.tscn" type="PackedScene" id=7]
-[ext_resource path="res://Scenes/Power/power_slow.tscn" type="PackedScene" id=8]
-[ext_resource path="res://Scenes/Power/power_small.tscn" type="PackedScene" id=9]
-[ext_resource path="res://Scenes/Power/power_big.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scenes/pause.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Scenes/end_game.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scenes/Power/power_fast.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scenes/Power/power_slow.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scenes/Power/power_small.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Scenes/Power/power_big.tscn" type="PackedScene" id=12]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 20, 512 )
@@ -18,17 +20,15 @@ extents = Vector2( 20, 512 )
 extents = Vector2( 288, 20 )
 
 [sub_resource type="DynamicFont" id=3]
-size = 20
-font_data = ExtResource( 3 )
-
-[sub_resource type="DynamicFont" id=4]
 size = 40
+outline_size = 2
+outline_color = Color( 0.286275, 0.286275, 0.290196, 1 )
 font_data = ExtResource( 3 )
 
-[sub_resource type="RectangleShape2D" id=5]
+[sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 300, 35 )
 
-[sub_resource type="RectangleShape2D" id=6]
+[sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 288, 30 )
 
 [node name="Game" type="Node2D"]
@@ -87,64 +87,34 @@ shape = SubResource( 2 )
 position = Vector2( 0, 1044 )
 shape = SubResource( 2 )
 
-[node name="Score" type="CanvasLayer" parent="."]
+[node name="Score" type="Node2D" parent="."]
 editor/display_folded = true
+z_index = 3
 
-[node name="Limit" type="Label" parent="Score"]
-margin_left = 454.993
-margin_top = 498.642
-margin_right = 506.993
-margin_bottom = 536.642
+[node name="Top" type="Label" parent="Score"]
+margin_left = -10.3254
+margin_top = 81.264
+margin_right = 73.6746
+margin_bottom = 156.264
 grow_horizontal = 0
 grow_vertical = 2
 custom_fonts/font = SubResource( 3 )
-custom_colors/font_color = Color( 0.0745098, 0.964706, 0.129412, 1 )
-text = "[50]"
-align = 1
-
-[node name="Top" type="Label" parent="Score"]
-margin_left = 489.0
-margin_top = 422.0
-margin_right = 573.0
-margin_bottom = 497.0
-grow_horizontal = 0
-grow_vertical = 2
-custom_fonts/font = SubResource( 4 )
 text = "0"
 align = 1
-__meta__ = {
-"_edit_lock_": true
-}
-
-[node name="Separator" type="Label" parent="Score"]
-margin_left = 468.0
-margin_top = 472.0
-margin_right = 552.0
-margin_bottom = 547.0
-grow_horizontal = 0
-grow_vertical = 2
-custom_fonts/font = SubResource( 4 )
-text = ".   ."
-align = 2
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="Bottom" type="Label" parent="Score"]
-margin_left = 489.0
-margin_top = 542.0
-margin_right = 573.0
-margin_bottom = 617.0
+margin_left = 497.202
+margin_top = 892.644
+margin_right = 581.202
+margin_bottom = 967.644
 grow_horizontal = 0
 grow_vertical = 2
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 3 )
 text = "0"
 align = 1
-__meta__ = {
-"_edit_lock_": true
-}
 
 [node name="BallController" type="Node2D" parent="."]
+editor/display_folded = true
 script = ExtResource( 4 )
 __meta__ = {
 "_edit_lock_": true
@@ -163,7 +133,7 @@ __meta__ = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BallController/TopArea"]
 position = Vector2( -2.93628, -2.93634 )
-shape = SubResource( 5 )
+shape = SubResource( 4 )
 
 [node name="BottomArea" type="Area2D" parent="BallController"]
 editor/display_folded = true
@@ -178,7 +148,23 @@ __meta__ = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BallController/BottomArea"]
 position = Vector2( -2.93628, -2.93634 )
+shape = SubResource( 4 )
+
+[node name="BallDetector" type="StaticBody2D" parent="."]
+editor/display_folded = true
+position = Vector2( 288, 100 )
+collision_layer = 8
+collision_mask = 0
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="BallDetector" type="CollisionShape2D" parent="BallDetector"]
 shape = SubResource( 5 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="Enemy" parent="." instance=ExtResource( 5 )]
 position = Vector2( 288, 48 )
@@ -192,32 +178,24 @@ position = Vector2( 288, 976 )
 collision_mask = 1
 SPEED = 700
 
-[node name="BallDetector" type="StaticBody2D" parent="."]
-editor/display_folded = true
-position = Vector2( 288, 100 )
-collision_layer = 8
-collision_mask = 0
+[node name="Pause" parent="." instance=ExtResource( 7 )]
 
-[node name="BallDetector" type="CollisionShape2D" parent="BallDetector"]
-shape = SubResource( 6 )
-__meta__ = {
-"_edit_group_": true
-}
+[node name="EndGame" parent="." instance=ExtResource( 8 )]
 
-[node name="PowerFast" parent="." instance=ExtResource( 7 )]
+[node name="PowerFast" parent="." instance=ExtResource( 9 )]
 position = Vector2( 173.884, 539.908 )
 
-[node name="PowerSlow" parent="." instance=ExtResource( 8 )]
+[node name="PowerSlow" parent="." instance=ExtResource( 10 )]
 position = Vector2( 426.248, 531.48 )
 
-[node name="PowerSmall" parent="." instance=ExtResource( 9 )]
+[node name="PowerSmall" parent="." instance=ExtResource( 11 )]
 position = Vector2( 63.1587, 540.71 )
 
-[node name="PowerBig" parent="." instance=ExtResource( 10 )]
+[node name="PowerBig" parent="." instance=ExtResource( 12 )]
 position = Vector2( 293.042, 535.565 )
 scale = Vector2( 0.6, 0.6 )
 
-[node name="PowerSmall2" parent="." instance=ExtResource( 9 )]
+[node name="PowerSmall2" parent="." instance=ExtResource( 11 )]
 position = Vector2( 526.336, 533.546 )
 [connection signal="body_entered" from="BallController/TopArea" to="BallController" method="_on_TopArea_body_entered"]
 [connection signal="body_entered" from="BallController/BottomArea" to="BallController" method="_on_BottomArea_body_entered"]

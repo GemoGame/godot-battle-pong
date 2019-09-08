@@ -1,0 +1,202 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Scripts/pause.gd" type="Script" id=1]
+[ext_resource path="res://Fonts/changa/Changa-Bold.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Scenes/Button/effect_button.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Button/music_button.tscn" type="PackedScene" id=4]
+
+[sub_resource type="DynamicFont" id=1]
+size = 20
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 60
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 40
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 30
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 20
+font_data = ExtResource( 2 )
+
+[sub_resource type="Animation" id=6]
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.392719 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.398354 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=7]
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[node name="Pause" type="Node2D"]
+pause_mode = 2
+z_index = 10
+script = ExtResource( 1 )
+
+[node name="Button" type="Button" parent="."]
+margin_left = 7.0
+margin_top = 499.0
+margin_right = 46.0
+margin_bottom = 543.0
+custom_fonts/font = SubResource( 1 )
+text = "||"
+
+[node name="Container" type="ColorRect" parent="."]
+margin_top = 300.0
+margin_right = 576.0
+margin_bottom = 750.0
+rect_min_size = Vector2( 576, 450 )
+color = Color( 0.4, 0.4, 0.4, 1 )
+
+[node name="Title" type="Label" parent="Container"]
+margin_left = 97.2905
+margin_top = -3.46072
+margin_right = 468.29
+margin_bottom = 107.539
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0, 0.811765, 0.737255, 1 )
+text = "Game Paused"
+
+[node name="AudioTitle" type="Label" parent="Container"]
+margin_left = 149.0
+margin_top = 109.0
+margin_right = 417.0
+margin_bottom = 184.0
+custom_fonts/font = SubResource( 3 )
+text = "Audio Settings"
+
+[node name="ScoreLimit" type="Label" parent="Container"]
+margin_left = 197.651
+margin_top = 304.34
+margin_right = 360.651
+margin_bottom = 360.34
+custom_fonts/font = SubResource( 4 )
+text = "Score Limit"
+align = 1
+
+[node name="Limit" type="Label" parent="Container"]
+margin_left = 197.651
+margin_top = 330.804
+margin_right = 360.651
+margin_bottom = 386.804
+custom_fonts/font = SubResource( 4 )
+text = "LMAO XDD"
+align = 1
+
+[node name="HBox1" type="HBoxContainer" parent="Container"]
+editor/display_folded = true
+margin_left = 114.558
+margin_top = 178.087
+margin_right = 676.558
+margin_bottom = 324.087
+rect_scale = Vector2( 0.6, 0.6 )
+custom_constants/separation = 50
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="EffectButton" parent="Container/HBox1" instance=ExtResource( 3 )]
+margin_left = 0.0
+margin_top = 0.0
+margin_right = 256.0
+margin_bottom = 146.0
+
+[node name="MusicButton" parent="Container/HBox1" instance=ExtResource( 4 )]
+margin_left = 306.0
+margin_top = 0.0
+margin_right = 562.0
+margin_bottom = 146.0
+
+[node name="HBox2" type="HBoxContainer" parent="Container"]
+margin_left = 12.5367
+margin_top = 382.434
+margin_right = 562.537
+margin_bottom = 432.434
+custom_constants/separation = 50
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="BackMenu" type="Button" parent="Container/HBox2"]
+margin_right = 150.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 150, 50 )
+custom_fonts/font = SubResource( 5 )
+text = "Back to Menu"
+
+[node name="Retry" type="Button" parent="Container/HBox2"]
+margin_left = 200.0
+margin_right = 350.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 150, 50 )
+custom_fonts/font = SubResource( 5 )
+text = "Retry"
+
+[node name="Continue" type="Button" parent="Container/HBox2"]
+margin_left = 400.0
+margin_right = 550.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 150, 50 )
+custom_fonts/font = SubResource( 5 )
+text = "Continue"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Container"]
+anims/hide = SubResource( 6 )
+anims/show = SubResource( 7 )
+[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="Container/HBox2/BackMenu" to="." method="_on_BackMenu_pressed"]
+[connection signal="pressed" from="Container/HBox2/Retry" to="." method="_on_Retry_pressed"]
+[connection signal="pressed" from="Container/HBox2/Continue" to="." method="_on_Continue_pressed"]
+[connection signal="animation_finished" from="Container/AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

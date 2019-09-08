@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scenes/Panel/panel_base.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Fonts/changa/Changa-Bold.ttf" type="DynamicFontData" id=2]
@@ -24,24 +24,27 @@ func set_game_score_limit():
 		limit += str(score_limit[\"x\"])
 	limit += str(score_limit[\"y\"])
 	if limit == \"0\":
-		GameInfo.set_default_limit()
+		Game.set_default_limit()
 	else:
-		GameInfo.set_score_limit(int(limit))
+		Game.set_score_limit(int(limit))
+
+
+func set_level_info(difficulty):
+	set_game_score_limit()
+	Game.set_difficulty(difficulty)
+	Game.load_level()
 
 
 func _on_Easy_pressed():
-	set_game_score_limit()
-	get_tree().change_scene(\"res://Scenes/Game/game_easy.tscn\")
+	set_level_info(\"easy\")
 
 
 func _on_Normal_pressed():
-	set_game_score_limit()
-	get_tree().change_scene(\"res://Scenes/Game/game_normal.tscn\")
+	set_level_info(\"normal\")
 
 
 func _on_Hard_pressed():
-	set_game_score_limit()
-	get_tree().change_scene(\"res://Scenes/Game/game_hard.tscn\")
+	set_level_info(\"hard\")
 
 
 # OOF
@@ -72,7 +75,7 @@ func _on_TotalBallButton_pressed():
 	else:
 		balls = 1
 	$TotalBallButton.set_text(str(balls))
-	GameInfo.set_ball_amounts(balls)"
+	Game.set_ball_amounts(balls)"
 
 [sub_resource type="DynamicFont" id=2]
 size = 40
@@ -84,6 +87,10 @@ font_data = ExtResource( 2 )
 
 [sub_resource type="DynamicFont" id=4]
 size = 50
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 15
 font_data = ExtResource( 2 )
 
 [node name="DifficultyPanel" instance=ExtResource( 1 )]
@@ -216,10 +223,12 @@ text = "LUNATIC"
 align = 1
 
 [node name="SettingsButton" type="Button" parent="." index="8"]
-margin_left = 17.5678
-margin_top = 16.4598
-margin_right = 87.5678
-margin_bottom = 80.4598
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 90.0
+margin_bottom = 90.0
+rect_min_size = Vector2( 70, 70 )
+custom_fonts/font = SubResource( 5 )
 text = "Settings"
 [connection signal="pressed" from="HBoxContainer/LimitX" to="." method="_on_LimitX_pressed"]
 [connection signal="pressed" from="HBoxContainer/LimitY" to="." method="_on_LimitY_pressed"]

@@ -1,0 +1,163 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Fonts/changa/Changa-Bold.ttf" type="DynamicFontData" id=1]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Node2D
+
+
+const MENU_PATH = \"res://Scenes/menu.tscn\"
+
+
+func _ready():
+	visible = false
+
+
+func win():
+	get_tree().paused = true
+	$Container/AnimationPlayer.play(\"show\")
+	$Container/Title.set_text(\"You Win\")
+	$Container/Subtitle.set_text(\"Congratulation\")
+
+
+func lose():
+	get_tree().paused = true
+	$Container/AnimationPlayer.play(\"show\")
+	$Container/Title.set_text(\"You Lose\")
+	$Container/Subtitle.set_text(\"Git Gud lol\")
+
+
+func _on_BackMenu_pressed():
+	get_tree().paused = false
+	get_tree().change_scene(MENU_PATH)
+
+
+func _on_Retry_pressed():
+	Game.load_level()
+"
+
+[sub_resource type="DynamicFont" id=2]
+size = 60
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 30
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 20
+font_data = ExtResource( 1 )
+
+[sub_resource type="Animation" id=5]
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.392719 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.398354 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+
+[sub_resource type="Animation" id=6]
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("..:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[node name="EndGame" type="Node2D"]
+pause_mode = 2
+z_index = 10
+script = SubResource( 1 )
+
+[node name="Container" type="ColorRect" parent="."]
+margin_top = 300.0
+margin_right = 576.0
+margin_bottom = 750.0
+rect_min_size = Vector2( 576, 450 )
+color = Color( 0.4, 0.4, 0.4, 1 )
+
+[node name="Title" type="Label" parent="Container"]
+margin_top = 77.0
+margin_right = 576.0
+margin_bottom = 188.0
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0, 0.811765, 0.737255, 1 )
+text = "Game Paused"
+align = 1
+valign = 1
+
+[node name="Subtitle" type="Label" parent="Container"]
+margin_top = 204.404
+margin_right = 576.0
+margin_bottom = 260.404
+custom_fonts/font = SubResource( 3 )
+text = "LMAO XDD"
+align = 1
+valign = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Container"]
+margin_top = 328.0
+margin_right = 576.0
+margin_bottom = 378.0
+custom_constants/separation = 50
+alignment = 1
+
+[node name="BackMenu" type="Button" parent="Container/HBoxContainer"]
+margin_left = 113.0
+margin_right = 263.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 150, 50 )
+custom_fonts/font = SubResource( 4 )
+text = "Back to Menu"
+
+[node name="Retry" type="Button" parent="Container/HBoxContainer"]
+margin_left = 313.0
+margin_right = 463.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 150, 50 )
+custom_fonts/font = SubResource( 4 )
+text = "Retry"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Container"]
+anims/hide = SubResource( 5 )
+anims/show = SubResource( 6 )
+[connection signal="pressed" from="Container/HBoxContainer/BackMenu" to="." method="_on_BackMenu_pressed"]
+[connection signal="pressed" from="Container/HBoxContainer/Retry" to="." method="_on_Retry_pressed"]
