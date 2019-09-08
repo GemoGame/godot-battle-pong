@@ -1,7 +1,9 @@
 extends Control
 
-func fade_in():
+
+func show():
 	$AnimationPlayer.play("fade_in")
 
-func fade_out():
+
+func hide():
 	$AnimationPlayer.play("fade_out")

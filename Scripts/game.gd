@@ -8,6 +8,14 @@ onready var score = {
 
 func _ready():
 	SoundManager.play_music("game")
+	set_game_limit()
+
+
+func set_game_limit():
+	score_to_win = GameInfo.get_score_limit()
+	$Score/Limit.set_text(str("[", score_to_win, "]"))
+	$BallController.minimum_total_ball = GameInfo.get_ball_amounts()
+	$BallController.check_total_ball()
 
 
 func add_score(side):

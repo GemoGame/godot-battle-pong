@@ -1,0 +1,230 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Scenes/Panel/panel_base.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Fonts/changa/Changa-Bold.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Fonts/menu_fonts.tres" type="DynamicFont" id=3]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends \"res://Scripts/panel_base.gd\"
+
+
+signal to_settings
+
+
+var score_limit = {
+	\"x\" : 5,
+	\"y\" : 0
+}
+
+
+# r/badcode lol
+func set_game_score_limit():
+	var limit = \"\"
+	if score_limit[\"x\"] > 0:
+		limit += str(score_limit[\"x\"])
+	limit += str(score_limit[\"y\"])
+	if limit == \"0\":
+		GameInfo.set_default_limit()
+	else:
+		GameInfo.set_score_limit(int(limit))
+
+
+func _on_Easy_pressed():
+	set_game_score_limit()
+	get_tree().change_scene(\"res://Scenes/Game/game_easy.tscn\")
+
+
+func _on_Normal_pressed():
+	set_game_score_limit()
+	get_tree().change_scene(\"res://Scenes/Game/game_normal.tscn\")
+
+
+func _on_Hard_pressed():
+	set_game_score_limit()
+	get_tree().change_scene(\"res://Scenes/Game/game_hard.tscn\")
+
+
+# OOF
+func _on_LimitX_pressed():
+	if score_limit[\"x\"] < 9:
+		score_limit[\"x\"] += 1
+	else:
+		score_limit[\"x\"] = 0
+	$HBoxContainer/LimitX.set_text(str(score_limit[\"x\"]))
+
+
+func _on_LimitY_pressed():
+	if score_limit[\"y\"] < 9:
+		score_limit[\"y\"] += 1
+	else:
+		score_limit[\"y\"] = 0
+	$HBoxContainer/LimitY.set_text(str(score_limit[\"y\"]))
+
+
+func _on_SettingsButton_pressed():
+	emit_signal(\"to_settings\")
+
+
+func _on_TotalBallButton_pressed():
+	var balls = int($TotalBallButton.get_text())
+	if balls < 9:
+		balls += 1
+	else:
+		balls = 1
+	$TotalBallButton.set_text(str(balls))
+	GameInfo.set_ball_amounts(balls)"
+
+[sub_resource type="DynamicFont" id=2]
+size = 40
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 40
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=4]
+size = 50
+font_data = ExtResource( 2 )
+
+[node name="DifficultyPanel" instance=ExtResource( 1 )]
+script = SubResource( 1 )
+
+[node name="Label2" type="Label" parent="." index="2"]
+margin_left = 8.26013
+margin_top = 113.525
+margin_right = 262.26
+margin_bottom = 206.525
+custom_fonts/font = SubResource( 2 )
+text = "Score Limit"
+align = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." index="3"]
+margin_left = 31.108
+margin_top = 190.0
+margin_right = 236.108
+margin_bottom = 290.0
+custom_constants/separation = 5
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="LimitX" type="Button" parent="HBoxContainer" index="0"]
+margin_right = 100.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 100, 100 )
+custom_fonts/font = ExtResource( 3 )
+text = "5"
+
+[node name="LimitY" type="Button" parent="HBoxContainer" index="1"]
+margin_left = 105.0
+margin_right = 205.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 100, 100 )
+custom_fonts/font = ExtResource( 3 )
+text = "0"
+
+[node name="Label3" type="Label" parent="." index="4"]
+margin_left = 288.151
+margin_top = 115.753
+margin_right = 595.151
+margin_bottom = 208.753
+custom_fonts/font = SubResource( 3 )
+text = "Balls Amount"
+align = 1
+
+[node name="TotalBallButton" type="Button" parent="." index="5"]
+margin_left = 380.648
+margin_top = 190.0
+margin_right = 480.648
+margin_bottom = 290.0
+rect_min_size = Vector2( 100, 100 )
+custom_fonts/font = ExtResource( 3 )
+text = "5"
+
+[node name="Label" type="Label" parent="." index="6"]
+margin_left = 32.0533
+margin_top = 306.015
+margin_right = 523.053
+margin_bottom = 399.015
+custom_fonts/font = ExtResource( 3 )
+text = "AI Difficulty"
+align = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." index="7"]
+editor/display_folded = true
+margin_left = 154.924
+margin_top = 436.782
+margin_right = 404.924
+margin_bottom = 961.782
+custom_constants/separation = 75
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Easy" type="Button" parent="VBoxContainer" index="0"]
+editor/display_folded = true
+margin_right = 250.0
+margin_bottom = 125.0
+rect_min_size = Vector2( 250, 125 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Label" type="Label" parent="VBoxContainer/Easy" index="0"]
+margin_left = 21.0527
+margin_top = 10.5264
+margin_right = 225.053
+margin_bottom = 103.526
+custom_fonts/font = SubResource( 4 )
+text = "EZ MODO"
+
+[node name="Normal" type="Button" parent="VBoxContainer" index="1"]
+editor/display_folded = true
+margin_top = 200.0
+margin_right = 250.0
+margin_bottom = 325.0
+rect_min_size = Vector2( 250, 125 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Label" type="Label" parent="VBoxContainer/Normal" index="0"]
+margin_left = 21.0527
+margin_top = 10.5264
+margin_right = 225.053
+margin_bottom = 103.526
+custom_fonts/font = SubResource( 4 )
+text = "NORMIES"
+
+[node name="Hard" type="Button" parent="VBoxContainer" index="2"]
+editor/display_folded = true
+margin_top = 400.0
+margin_right = 250.0
+margin_bottom = 525.0
+rect_min_size = Vector2( 250, 125 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Label" type="Label" parent="VBoxContainer/Hard" index="0"]
+margin_left = 21.0527
+margin_top = 10.5264
+margin_right = 225.053
+margin_bottom = 103.526
+custom_fonts/font = SubResource( 4 )
+text = "LUNATIC"
+align = 1
+
+[node name="SettingsButton" type="Button" parent="." index="8"]
+margin_left = 17.5678
+margin_top = 16.4598
+margin_right = 87.5678
+margin_bottom = 80.4598
+text = "Settings"
+[connection signal="pressed" from="HBoxContainer/LimitX" to="." method="_on_LimitX_pressed"]
+[connection signal="pressed" from="HBoxContainer/LimitY" to="." method="_on_LimitY_pressed"]
+[connection signal="pressed" from="TotalBallButton" to="." method="_on_TotalBallButton_pressed"]
+[connection signal="pressed" from="VBoxContainer/Easy" to="." method="_on_Easy_pressed"]
+[connection signal="pressed" from="VBoxContainer/Normal" to="." method="_on_Normal_pressed"]
+[connection signal="pressed" from="VBoxContainer/Hard" to="." method="_on_Hard_pressed"]
+[connection signal="pressed" from="SettingsButton" to="." method="_on_SettingsButton_pressed"]

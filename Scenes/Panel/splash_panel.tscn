@@ -10,23 +10,23 @@
 script/source = "extends \"res://Scripts/panel_base.gd\"
 
 
-func _ready():
-	SoundManager.play_music(\"menu\")
+signal end_splash
+
+
+func start():
 	$AnimationPlayer.play(\"splash\")
 
 
 func _on_PlayButton_pressed():
-	fade_out()
+	emit_signal(\"end_splash\")
 
 
 func _on_AnimationPlayer_animation_finished(anim_name):
 	if anim_name == \"splash\":
 		$AnimationPlayer.play(\"splash 2\")
-	if anim_name == \"fade_out\":
-		get_tree().change_scene(\"res://Scenes/Panel/ai_difficulty_selection.tscn\")
 "
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=2]
 resource_name = "splash 2"
 length = 1.2
 loop = true
@@ -43,7 +43,7 @@ tracks/0/keys = {
 "values": [ Vector2( 129.421, 180.211 ), Vector2( 129.421, 250 ), Vector2( 129.421, 180.211 ), Vector2( 129.421, 130 ), Vector2( 129.421, 180.211 ) ]
 }
 
-[sub_resource type="DynamicFont" id=2]
+[sub_resource type="DynamicFont" id=3]
 size = 90
 outline_size = 6
 extra_spacing_top = -10
@@ -52,19 +52,18 @@ extra_spacing_char = 6
 font_data = ExtResource( 3 )
 
 [node name="SplashPanel" instance=ExtResource( 1 )]
-modulate = Color( 1, 1, 1, 1 )
 script = SubResource( 1 )
 
 [node name="AnimationPlayer" parent="." index="1"]
 anims/splash = ExtResource( 2 )
-"anims/splash 2" = SubResource( 3 )
+"anims/splash 2" = SubResource( 2 )
 
 [node name="Title" type="Label" parent="." index="2"]
 margin_left = 129.421
 margin_top = 180.211
 margin_right = 447.421
 margin_bottom = 369.211
-custom_fonts/font = SubResource( 2 )
+custom_fonts/font = SubResource( 3 )
 custom_colors/font_color = Color( 0.396078, 0.427451, 0.435294, 1 )
 text = "BATTLE
 PONG"

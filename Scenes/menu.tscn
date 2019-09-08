@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scenes/Panel/settings_panel.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Panel/difficulty_panel.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Panel/splash_panel.tscn" type="PackedScene" id=3]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends Control
+
+
+onready var splash = $SplashPanel
+onready var settings = $SettingsPanel
+onready var difficulty = $DifficultyPanel
+
+
+func _ready():
+	SoundManager.play_music(\"menu\")
+	settings.hide()
+	difficulty.hide()
+	splash.start()
+
+
+func _on_SplashPanel_end_splash():
+	splash.hide()
+	difficulty.show()
+
+
+func _on_SettingsPanel_to_difficulty():
+	settings.hide()
+	difficulty.show()
+
+
+func _on_DifficultyPanel_to_settings():
+	difficulty.hide()
+	settings.show()"
+
+[node name="Menu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = SubResource( 1 )
+
+[node name="SettingsPanel" parent="." instance=ExtResource( 1 )]
+
+[node name="DifficultyPanel" parent="." instance=ExtResource( 2 )]
+
+[node name="SplashPanel" parent="." instance=ExtResource( 3 )]
+[connection signal="to_difficulty" from="SettingsPanel" to="." method="_on_SettingsPanel_to_difficulty"]
+[connection signal="to_settings" from="DifficultyPanel" to="." method="_on_DifficultyPanel_to_settings"]
+[connection signal="end_splash" from="SplashPanel" to="." method="_on_SplashPanel_end_splash"]

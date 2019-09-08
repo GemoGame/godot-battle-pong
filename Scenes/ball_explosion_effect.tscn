@@ -11,7 +11,8 @@ script/source = "extends Sprite
 func start(target_position):
 	global_position = target_position
 	$AnimationPlayer.play(\"ball_destroy\")
-	$AudioStreamPlayer2D.play()
+	if ConfigManager.effect_on:
+		$AudioStreamPlayer2D.play()
 
 
 func _on_AnimationPlayer_animation_finished(anim_name):

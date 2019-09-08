@@ -14,7 +14,8 @@ script/source = "extends Area2D
 func _on_PowerUp_body_entered(body):
 	if body.is_in_group(\"Ball\"):
 		body.power_big()
-		$AudioStreamPlayer2D.play()
+		if ConfigManager.effect_on:
+			$AudioStreamPlayer2D.play()
 
 "
 
@@ -26,7 +27,7 @@ animations = [ {
 "speed": 10.0
 } ]
 
-[node name="PowerBig" instance=ExtResource( 1 )]
+[node name="PowerBig" index="0" instance=ExtResource( 1 )]
 scale = Vector2( 1, 1 )
 script = SubResource( 1 )
 

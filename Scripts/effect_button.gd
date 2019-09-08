@@ -19,7 +19,6 @@ func update_texture():
 func change_state():
 	ConfigManager.effect_on = !ConfigManager.effect_on
 	ConfigManager.save_config()
-	SoundManager.play_effect("general", "effect_button")
 	update_texture()
 	print("Effect on status : " + str(ConfigManager.effect_on))
 

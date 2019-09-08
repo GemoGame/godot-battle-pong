@@ -1,0 +1,70 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Scenes/Panel/panel_base.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Fonts/menu_fonts.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Scenes/Button/music_button.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/Button/effect_button.tscn" type="PackedScene" id=4]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends \"res://Scripts/panel_base.gd\"
+
+
+signal to_difficulty
+
+
+func _on_DifficultyButton_pressed():
+	emit_signal(\"to_difficulty\")
+"
+
+[node name="SettingsPanel" instance=ExtResource( 1 )]
+script = SubResource( 1 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." index="2"]
+editor/display_folded = true
+margin_left = 164.0
+margin_top = 149.0
+margin_right = 420.0
+margin_bottom = 717.0
+custom_constants/separation = 30
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Label" type="Label" parent="VBoxContainer" index="0"]
+margin_right = 256.0
+margin_bottom = 93.0
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 1, 0.996078, 0.996078, 1 )
+text = "MUSIC"
+align = 1
+valign = 1
+
+[node name="MusicButton" parent="VBoxContainer" index="1" instance=ExtResource( 3 )]
+margin_left = 0.0
+margin_top = 123.0
+margin_right = 256.0
+margin_bottom = 269.0
+
+[node name="Label2" type="Label" parent="VBoxContainer" index="2"]
+margin_top = 299.0
+margin_right = 256.0
+margin_bottom = 392.0
+custom_fonts/font = ExtResource( 2 )
+custom_colors/font_color = Color( 1, 0.996078, 0.996078, 1 )
+text = "SFX"
+align = 1
+valign = 1
+
+[node name="EffectButton" parent="VBoxContainer" index="3" instance=ExtResource( 4 )]
+margin_left = 0.0
+margin_top = 422.0
+margin_right = 256.0
+margin_bottom = 568.0
+
+[node name="DifficultyButton" type="Button" parent="." index="3"]
+margin_left = 23.8002
+margin_top = 22.2135
+margin_right = 90.8002
+margin_bottom = 88.2135
+text = "Menu"
+[connection signal="pressed" from="DifficultyButton" to="." method="_on_DifficultyButton_pressed"]

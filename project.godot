@@ -16,7 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Battle Pong"
-run/main_scene="res://Scenes/game_base.tscn"
+run/main_scene="res://Scenes/menu.tscn"
 boot_splash/bg_color=Color( 0.0235294, 0.0235294, 0.0235294, 1 )
 config/icon="res://icon.png"
 
@@ -24,6 +24,7 @@ config/icon="res://icon.png"
 
 ConfigManager="*res://Singleton/config_manager.gd"
 SoundManager="*res://Singleton/sound_manager.tscn"
+GameInfo="*res://Singleton/game_info.gd"
 
 [display]
 

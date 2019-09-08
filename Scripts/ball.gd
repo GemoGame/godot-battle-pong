@@ -3,7 +3,7 @@ extends KinematicBody2D
 ### GAME VARIABLE ###
 const ENEMY_NORMAL_POSITION = Vector2(288, 48)
 const GAME_SIZE = Vector2(576, 1024)
-var display_rays = true
+var display_rays = false
 
 ### COLLISION VARIABLE ###
 const ACCELERATE_COLLISION_PADDLE = 0.2
@@ -108,7 +108,8 @@ func _physics_process(delta):
 			velocity_modifier += ACCELERATE_COLLISION_OBSTACLE
 		if collide.is_in_group("Paddle") and SPEED_POWER == NORMAL_SPEED:
 			velocity_modifier += ACCELERATE_COLLISION_PADDLE
-			$AudioStreamPlayer2D.play()
+			if ConfigManager.effect_on:
+				$AudioStreamPlayer2D.play()
 		if collide.name == "Enemy":
 			destination = ENEMY_NORMAL_POSITION
 	if SPEED_POWER == NORMAL_SPEED:

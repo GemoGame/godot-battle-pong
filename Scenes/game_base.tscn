@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://Scripts/game.gd" type="Script" id=1]
 [ext_resource path="res://Images/background.png" type="Texture" id=2]
@@ -18,19 +18,23 @@ extents = Vector2( 20, 512 )
 extents = Vector2( 288, 20 )
 
 [sub_resource type="DynamicFont" id=3]
+size = 20
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=4]
 size = 40
 font_data = ExtResource( 3 )
 
-[sub_resource type="RectangleShape2D" id=4]
+[sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 300, 35 )
 
-[sub_resource type="RectangleShape2D" id=5]
+[sub_resource type="RectangleShape2D" id=6]
 extents = Vector2( 288, 30 )
 
 [node name="Game" type="Node2D"]
 position = Vector2( 0, 1 )
 script = ExtResource( 1 )
-score_to_win = 20
+score_to_win = 1000
 
 [node name="Background" type="TextureRect" parent="."]
 margin_right = 576.0
@@ -83,11 +87,20 @@ shape = SubResource( 2 )
 position = Vector2( 0, 1044 )
 shape = SubResource( 2 )
 
-[node name="Score" type="Control" parent="."]
+[node name="Score" type="CanvasLayer" parent="."]
 editor/display_folded = true
-__meta__ = {
-"_edit_lock_": true
-}
+
+[node name="Limit" type="Label" parent="Score"]
+margin_left = 454.993
+margin_top = 498.642
+margin_right = 506.993
+margin_bottom = 536.642
+grow_horizontal = 0
+grow_vertical = 2
+custom_fonts/font = SubResource( 3 )
+custom_colors/font_color = Color( 0.0745098, 0.964706, 0.129412, 1 )
+text = "[50]"
+align = 1
 
 [node name="Top" type="Label" parent="Score"]
 margin_left = 489.0
@@ -96,9 +109,12 @@ margin_right = 573.0
 margin_bottom = 497.0
 grow_horizontal = 0
 grow_vertical = 2
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
 text = "0"
 align = 1
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Separator" type="Label" parent="Score"]
 margin_left = 468.0
@@ -107,9 +123,12 @@ margin_right = 552.0
 margin_bottom = 547.0
 grow_horizontal = 0
 grow_vertical = 2
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
 text = ".   ."
 align = 2
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Bottom" type="Label" parent="Score"]
 margin_left = 489.0
@@ -118,16 +137,19 @@ margin_right = 573.0
 margin_bottom = 617.0
 grow_horizontal = 0
 grow_vertical = 2
-custom_fonts/font = SubResource( 3 )
+custom_fonts/font = SubResource( 4 )
 text = "0"
 align = 1
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="BallController" type="Node2D" parent="."]
 script = ExtResource( 4 )
 __meta__ = {
 "_edit_lock_": true
 }
-minimum_total_ball = 5
+minimum_total_ball = 0
 
 [node name="TopArea" type="Area2D" parent="BallController"]
 position = Vector2( 288, 35 )
@@ -141,7 +163,7 @@ __meta__ = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BallController/TopArea"]
 position = Vector2( -2.93628, -2.93634 )
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 
 [node name="BottomArea" type="Area2D" parent="BallController"]
 editor/display_folded = true
@@ -156,25 +178,28 @@ __meta__ = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BallController/BottomArea"]
 position = Vector2( -2.93628, -2.93634 )
-shape = SubResource( 4 )
+shape = SubResource( 5 )
 
 [node name="Enemy" parent="." instance=ExtResource( 5 )]
 position = Vector2( 288, 48 )
 collision_mask = 1
+SPEED = 700
 DIFFERENCE_TOLERANCE = 20
 EASY_MODE = false
 
 [node name="Player" parent="." instance=ExtResource( 6 )]
 position = Vector2( 288, 976 )
 collision_mask = 1
+SPEED = 700
 
 [node name="BallDetector" type="StaticBody2D" parent="."]
+editor/display_folded = true
 position = Vector2( 288, 100 )
 collision_layer = 8
 collision_mask = 0
 
 [node name="BallDetector" type="CollisionShape2D" parent="BallDetector"]
-shape = SubResource( 5 )
+shape = SubResource( 6 )
 __meta__ = {
 "_edit_group_": true
 }

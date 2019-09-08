@@ -18,7 +18,8 @@ func _ready():
 func _on_PowerUp_body_entered(body):
 	if body.is_in_group(\"Ball\"):
 		body.power_slow()
-		$AudioStreamPlayer2D.play()"
+		if ConfigManager.effect_on:
+			$AudioStreamPlayer2D.play()"
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
@@ -34,6 +35,7 @@ script = SubResource( 1 )
 [node name="AnimatedSprite" parent="." index="0"]
 rotation = 0.48162
 frames = SubResource( 2 )
+frame = 1
 playing = true
 
 [node name="AudioStreamPlayer2D" parent="." index="3"]
