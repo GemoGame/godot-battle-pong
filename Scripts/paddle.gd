@@ -11,7 +11,7 @@ export (int) var PADDLE_SEGMENT = 5
 onready var PADDLE_SIZE = $CollisionShape2D.shape.extents
 onready var STARTING_POSITION = position
 var velocity = Vector2(0, 0)
-
+var speed_modifier = 1 # For player when pick an items
 
 func is_at_edge():
 	if velocity.x < 0 and position.x <= PADDLE_SIZE.x:
@@ -32,9 +32,9 @@ func calculate_position_difference(target):
 	if has_align_target(target) or is_at_edge():
 		velocity.x = 0
 	elif position.x < target.x:
-		velocity.x = SPEED
+		velocity.x = SPEED * speed_modifier
 	elif position.x > target.x:
-		velocity.x = -SPEED
+		velocity.x = -SPEED * speed_modifier
 
 
 func calculate_reflect_difference(ball):

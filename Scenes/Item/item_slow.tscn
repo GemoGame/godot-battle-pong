@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scenes/Item/item_base.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Images/Item/slow.png" type="Texture" id=2]
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends \"res://Scripts/item_base.gd\"
+
+
+func _physics_process(delta):
+	var collision = move_and_collide(delta * Vector2(0, SPEED))
+	if collision:
+		if collision.collider.name == \"Player\":
+			collision.collider.slow_down()
+			queue_free()"
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[node name="ItemBase" index="0" instance=ExtResource( 1 )]
+script = SubResource( 1 )
+
+[node name="Sprite" parent="." index="0"]
+scale = Vector2( 0.17, 0.17 )
+frames = SubResource( 2 )

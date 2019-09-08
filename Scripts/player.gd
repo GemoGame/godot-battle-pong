@@ -11,7 +11,6 @@ func _ready():
 	position = NORMAL_POSITION
 
 
-
 func _physics_process(delta):
 	if Input.is_action_pressed("ui_touch"):
 		input_position = get_global_mouse_position()
@@ -35,3 +34,17 @@ func _physics_process(delta):
 	if collision:
 		if collision.collider.is_in_group("Ball"):
 			calculate_reflect_difference(collision.collider)
+
+
+func speed_up():
+	speed_modifier = 2
+	$ItemSpeedEffect.start()
+
+
+func slow_down():
+	speed_modifier = 0.5
+	$ItemSpeedEffect.start()
+
+
+func _on_ItemSpeedEffect_timeout():
+	speed_modifier = 1

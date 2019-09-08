@@ -7,7 +7,6 @@ const GAME_SIZE = Vector2(576, 1024)
 
 ### TOTAL BALL RELATED VARIABLE ###
 export (int) var minimum_total_ball = 3
-export (int) var maximum_total_ball = 10
 onready var current_total_ball = 0
 
 

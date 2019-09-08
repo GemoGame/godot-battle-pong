@@ -3,7 +3,6 @@ extends KinematicBody2D
 ### GAME VARIABLE ###
 const ENEMY_NORMAL_POSITION = Vector2(288, 48)
 const GAME_SIZE = Vector2(576, 1024)
-var display_rays = false
 
 ### COLLISION VARIABLE ###
 const ACCELERATE_COLLISION_PADDLE = 0.2
@@ -199,8 +198,8 @@ func ray_cast():
 			rays[2]["visual"].set_point_position(1, rays[2]["collision"].cast_to)
 			if rays[2]["collision"].is_colliding() && rays[2]["collision"].get_collider().name == "BallDetector":
 				destination = rays[2]["collision"].get_collision_point()
-	rays[1]["visual"].visible = display_rays
-	rays[2]["visual"].visible = display_rays
+	rays[1]["visual"].visible = Game.is_raycast_active
+	rays[2]["visual"].visible = Game.is_raycast_active
 
 
 ### SPEED_POWER UP RELATED ###

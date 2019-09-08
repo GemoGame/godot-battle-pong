@@ -5,6 +5,9 @@ var score_limit = 50
 var ball_amounts = 5
 var ai_difficulty = "hard"
 
+const GAME_SIZE = Vector2(576, 1024)
+var is_raycast_active = false
+
 
 onready var level = {
 	"easy" : "res://Scenes/Game/game_easy.tscn",

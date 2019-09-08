@@ -51,6 +51,7 @@ ui_touch={
 2d_physics/layer_3="Ball"
 2d_physics/layer_4="AI Detector"
 2d_physics/layer_5="Power Up"
+2d_physics/layer_6="Drop Item"
 
 [rendering]
 
