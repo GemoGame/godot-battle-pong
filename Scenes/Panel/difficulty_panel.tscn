@@ -68,6 +68,10 @@ func _on_SettingsButton_pressed():
 	emit_signal(\"to_settings\")
 
 
+func _on_QuitButton_pressed():
+	get_tree().quit()
+	
+
 func _on_TotalBallButton_pressed():
 	var balls = int($TotalBallButton.get_text())
 	if balls < 9:
@@ -75,7 +79,8 @@ func _on_TotalBallButton_pressed():
 	else:
 		balls = 1
 	$TotalBallButton.set_text(str(balls))
-	Game.set_ball_amounts(balls)"
+	Game.set_ball_amounts(balls)
+"
 
 [sub_resource type="DynamicFont" id=2]
 size = 40
@@ -93,7 +98,7 @@ font_data = ExtResource( 2 )
 size = 15
 font_data = ExtResource( 2 )
 
-[node name="DifficultyPanel" instance=ExtResource( 1 )]
+[node name="DifficultyPanel" index="0" instance=ExtResource( 1 )]
 script = SubResource( 1 )
 
 [node name="Label2" type="Label" parent="." index="2"]
@@ -228,8 +233,19 @@ margin_top = 20.0
 margin_right = 90.0
 margin_bottom = 90.0
 rect_min_size = Vector2( 70, 70 )
+rect_pivot_offset = Vector2( -780, 300 )
 custom_fonts/font = SubResource( 5 )
 text = "Settings"
+
+[node name="QuitButton" type="Button" parent="." index="9"]
+margin_left = 480.0
+margin_top = 20.0
+margin_right = 550.0
+margin_bottom = 90.0
+rect_min_size = Vector2( 70, 70 )
+rect_pivot_offset = Vector2( -780, 300 )
+custom_fonts/font = SubResource( 5 )
+text = "Quit"
 [connection signal="pressed" from="HBoxContainer/LimitX" to="." method="_on_LimitX_pressed"]
 [connection signal="pressed" from="HBoxContainer/LimitY" to="." method="_on_LimitY_pressed"]
 [connection signal="pressed" from="TotalBallButton" to="." method="_on_TotalBallButton_pressed"]
@@ -237,3 +253,4 @@ text = "Settings"
 [connection signal="pressed" from="VBoxContainer/Normal" to="." method="_on_Normal_pressed"]
 [connection signal="pressed" from="VBoxContainer/Hard" to="." method="_on_Hard_pressed"]
 [connection signal="pressed" from="SettingsButton" to="." method="_on_SettingsButton_pressed"]
+[connection signal="pressed" from="QuitButton" to="." method="_on_QuitButton_pressed"]

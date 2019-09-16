@@ -2,3 +2,5 @@
 .mono/
 *.apk
 *.mp3
+*.exe
+*.pck
