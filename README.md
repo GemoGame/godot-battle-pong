@@ -1,8 +1,14 @@
 # Battle Pong
-
-![Git Gud](icon.png)
+<p align="center">
+  <img width="300" height="300" src="logo.png">
+</p>
 
 Just a _simple_ game demo from BSO Gemo.
+
+## Download
+- Windows [download](https://github.com/GemoGame/godot-battle-pong/releases/download/demo/Battle.Pong.Demo.zip)
+- Android [download](https://github.com/GemoGame/godot-battle-pong/releases/download/demo/Battle.Pong.Demo.apk) (.exe)
+
 
 ## UwU what's this ?
 Well altough this game title has **Battle** in it, it doesn't mean this game is sort kind of **Counter Strike, PUBG, Etc**.
@@ -15,10 +21,12 @@ So what is it then ?, Well... this game just your ordinary _old-classic-pong_ ga
 
 So basically, you can call it _**Pong on Steroids**_
 
-## How to Install
-Because .apk and .exe file are still not available, you can try to launch the game directly by using Godot Engine. 
 
-#### Steps:
+## How to Install
+~~Because .apk and .exe file are still not available, you can try to launch the game directly by using Godot Engine.~~
+
+Manual Install :
+### Steps:
 1. If you don't have it, you can download it [HERE](https://godotengine.org/download/)
 
 2. Download the game source code as [.ZIP](https://github.com/GemoGame/godot-battle-pong/archive/master.zip) 
@@ -48,5 +56,6 @@ Special thanks to :
 - [Reflected ball sound](http://soundbible.com/1473-Camera-Flash.html)
 - [Destroyed ball sound](http://soundbible.com/1658-Mirror-Breaking.html)
 
+
 ## Game Status
-_Unfinished_
+Playable Demo
