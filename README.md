@@ -6,8 +6,8 @@
 Just a _simple_ game demo from BSO Gemo.
 
 ## Download
-- Windows [download](https://github.com/GemoGame/godot-battle-pong/releases/download/demo/Battle.Pong.Demo.zip)
-- Android [download](https://github.com/GemoGame/godot-battle-pong/releases/download/demo/Battle.Pong.Demo.apk) (.exe)
+- Windows [download](https://github.com/GemoGame/godot-battle-pong/releases/download/demo/Battle.Pong.Demo.zip) (.exe)
+- Android [download](https://github.com/GemoGame/godot-battle-pong/releases/download/demo/Battle.Pong.Demo.apk) (.apk)
 
 
 ## UwU what's this ?
